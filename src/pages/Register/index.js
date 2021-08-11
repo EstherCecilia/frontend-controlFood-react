@@ -18,14 +18,6 @@ export default function Register() {
   async function handleRegister(e) {
     e.preventDefault();
 
-    const data = {
-      name,
-      email,
-      whatsapp,
-      city,
-      uf,
-    };
-
     alert(`Seu ID de acesso é 1`);
 
     history.push("/");

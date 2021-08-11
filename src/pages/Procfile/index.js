@@ -3,36 +3,26 @@ import { Link, useHistory } from "react-router-dom";
 import { FiPower, FiTrash2 } from "react-icons/fi";
 import { FaRegGrimace } from "react-icons/fa";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { addProduct, removeProduct } from "../../actions";
+
 import "./styles.css";
 
 import Modal from "../NewPedido";
 
 import logoImg from "../../assets/logo.png";
 
-const DATA = [
-  {
-    id: 0,
-    pedido: "Cachorro quente",
-    descricao: "Remover milho",
-    tempo: "1 hora",
-  },
-
-  {
-    id: 1,
-    pedido: "Hamburguer",
-    descricao: "Remover salada",
-    tempo: "2 hora",
-  },
-];
-
 export default function Profile() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [pedidos, setPedidos] = useState([]);
+  const state = useSelector((state) => state.reducer);
 
   useEffect(() => {
-    setPedidos(DATA);
-  }, []);
+    setPedidos(state);
+  }, [state]);
 
   const ongId = localStorage.getItem("ongId");
 
@@ -43,12 +33,11 @@ export default function Profile() {
   }
 
   function handleRemove({ key }) {
-    let aux = pedidos.filter((el) => el.id !== key);
-    setPedidos(aux);
+    dispatch(removeProduct(key));
   }
 
   function handleAdicionar({ pedido, descricao, id }) {
-    setPedidos([...pedidos, { id, pedido, descricao, tempo: "1 hora" }]);
+    dispatch(addProduct({ id, pedido, descricao, tempo: "1 hora" }));
   }
 
   return (

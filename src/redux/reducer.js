@@ -17,18 +17,11 @@ const initialState = [
 const produtos = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TODO":
-      return [
-        ...state,
-        {
-          id: action.id,
-          text: action.text,
-          completed: false,
-        },
-      ];
-    case "TOGGLE_TODO":
-      return state.map((todo) =>
-        todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
-      );
+      console.log(action.payload);
+      return [...state, action.payload];
+    case "REMOVE_TODO":
+      let aux = state.filter((el) => el.id !== action.payload);
+      return aux;
     default:
       return state;
   }
